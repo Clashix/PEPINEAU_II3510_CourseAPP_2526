@@ -6,6 +6,11 @@ import androidx.room.PrimaryKey
 import androidx.room.Index
 import androidx.room.ColumnInfo
 
+/**
+ * Représente l'inscription d'un étudiant à un cours dans la base de données Room.
+ * Crée une relation many-to-many entre les étudiants et les cours.
+ * Contient aussi un score préliminaire pour l'inscription.
+ */
 @Entity(
     tableName = "subscribes",
     primaryKeys = ["studentId", "courseId"],

@@ -3,6 +3,7 @@ package com.tumme.scrudstudents.data.local
 import androidx.room.TypeConverter
 import com.tumme.scrudstudents.data.local.model.Gender
 import com.tumme.scrudstudents.data.local.model.LevelCourse
+import com.tumme.scrudstudents.data.local.model.UserRole
 import java.util.Date
 
 class Converters {
@@ -23,4 +24,10 @@ class Converters {
 
     @TypeConverter
     fun levelToString(level: LevelCourse?): String? = level?.value
+    
+    @TypeConverter
+    fun fromUserRole(value: String?): UserRole? = value?.let { UserRole.from(it) }
+    
+    @TypeConverter
+    fun userRoleToString(role: UserRole?): String? = role?.value
 }

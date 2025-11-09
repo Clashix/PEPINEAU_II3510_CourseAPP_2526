@@ -1,4 +1,4 @@
-package com.tumme.scrudstudents.ui.student
+package com.tumme.scrudstudents.ui.course
 
 import com.tumme.scrudstudents.ui.components.TableHeader
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,29 +11,29 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
 /**
- * Écran affichant la liste de tous les étudiants avec opérations CRUD.
- * Permet d'ajouter, supprimer et consulter les détails des étudiants.
- * Utilise StudentListViewModel pour gérer les données.
+ * Écran affichant la liste de tous les cours avec opérations CRUD.
+ * Permet d'ajouter, supprimer et consulter les détails des cours.
+ * Utilise CourseListViewModel pour gérer les données.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StudentListScreen(
-    viewModel: StudentListViewModel = hiltViewModel(),
+fun CourseListScreen(
+    viewModel: CourseListViewModel = hiltViewModel(),
     onNavigateToForm: () -> Unit = {},
     onNavigateToDetail: (Int) -> Unit = {},
-    onNavigateToCourses: () -> Unit = {},
+    onNavigateToStudents: () -> Unit = {},
     onNavigateToSubscribes: () -> Unit = {}
 ) {
-    val students by viewModel.students.collectAsState()
+    val courses by viewModel.courses.collectAsState()
     val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Students") },
+                title = { Text("Courses") },
                 actions = {
-                    TextButton(onClick = onNavigateToCourses) {
-                        Text("Cours")
+                    TextButton(onClick = onNavigateToStudents) {
+                        Text("Étudiants")
                     }
                     TextButton(onClick = onNavigateToSubscribes) {
                         Text("Inscriptions")
@@ -53,26 +53,26 @@ fun StudentListScreen(
             .padding(16.dp)
         ) {
             Button(
-                onClick = onNavigateToCourses,
+                onClick = onNavigateToStudents,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Go to Courses")
+                Text("Go to Students")
             }
             
             Spacer(modifier = Modifier.height(16.dp))
             
-            TableHeader(cells = listOf("DOB","Last", "First", "Gender", "Actions"),
-                weights = listOf(0.25f, 0.25f, 0.25f, 0.15f, 0.10f))
+            TableHeader(cells = listOf("Name", "ECTS", "Level", "Actions"),
+                weights = listOf(0.4f, 0.2f, 0.2f, 0.2f))
 
             Spacer(modifier = Modifier.height(8.dp))
 
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(students) { student ->
-                    StudentRow(
-                        student = student,
+                items(courses) { course ->
+                    CourseRow(
+                        course = course,
                         onEdit = { },
-                        onDelete = { viewModel.deleteStudent(student) },
-                        onView = { onNavigateToDetail(student.idStudent) },
+                        onDelete = { viewModel.deleteCourse(course) },
+                        onView = { onNavigateToDetail(course.idCourse) },
                         onShare = { }
                     )
                 }

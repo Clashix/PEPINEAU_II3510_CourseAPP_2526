@@ -12,6 +12,11 @@ import com.tumme.scrudstudents.data.local.model.StudentEntity
 import java.text.SimpleDateFormat
 import java.util.Locale
 
+/**
+ * Écran affichant les détails d'un étudiant spécifique.
+ * Récupère les informations de l'étudiant par son ID et les affiche.
+ * Permet de retourner à la liste via le bouton retour.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StudentDetailScreen(

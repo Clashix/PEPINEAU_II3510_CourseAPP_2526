@@ -1,4 +1,4 @@
-package com.tumme.scrudstudents.ui.student
+package com.tumme.scrudstudents.ui.course
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -11,34 +11,30 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.tumme.scrudstudents.data.local.model.StudentEntity
-import java.text.SimpleDateFormat
-import java.util.Locale
+import com.tumme.scrudstudents.data.local.model.CourseEntity
 
 /**
- * Composant affichant une ligne d'étudiant dans la liste.
- * Affiche les informations principales (date de naissance, nom, prénom, genre).
+ * Composant affichant une ligne de cours dans la liste.
+ * Affiche les informations principales (nom, ECTS, niveau).
  * Fournit des boutons d'action : voir, modifier, supprimer, partager.
  */
 @Composable
-fun StudentRow(
-    student: StudentEntity,
+fun CourseRow(
+    course: CourseEntity,
     onEdit: ()->Unit,
     onDelete: ()->Unit,
     onView: ()->Unit,
     onShare: ()->Unit
 ) {
-    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     Row(modifier = Modifier
         .fillMaxWidth()
         .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text = student.dateOfBirth.let { dateFormat.format(it) }, modifier = Modifier.weight(0.25f))
-        Text(text = "${student.lastName}", modifier = Modifier.weight(0.25f))
-        Text(text = "${student.firstName}", modifier = Modifier.weight(0.25f))
-        Text(text = student.gender.value, modifier = Modifier.weight(0.15f))
-        Row(modifier = Modifier.weight(0.10f), horizontalArrangement = Arrangement.SpaceEvenly) {
+        Text(text = course.nameCourse, modifier = Modifier.weight(0.4f))
+        Text(text = course.ectsCourse.toString(), modifier = Modifier.weight(0.2f))
+        Text(text = course.levelCourse.value, modifier = Modifier.weight(0.2f))
+        Row(modifier = Modifier.weight(0.2f), horizontalArrangement = Arrangement.SpaceEvenly) {
             IconButton(onClick = onView) { Icon(Icons.Default.Info, contentDescription="View") }
             IconButton(onClick = onEdit) { Icon(Icons.Default.Edit, contentDescription="Edit") }
             IconButton(onClick = onDelete) { Icon(Icons.Default.Delete, contentDescription="Delete") }

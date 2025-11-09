@@ -11,6 +11,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 
+/**
+ * Composant réutilisable pour afficher l'en-tête d'un tableau.
+ * Prend une liste de cellules et leurs poids pour définir la largeur de chaque colonne.
+ * Utilisé dans les listes d'étudiants, cours et inscriptions.
+ */
 @Composable
 fun TableHeader(cells: List<String>, weights: List<Float>) {
     Row(modifier = Modifier
