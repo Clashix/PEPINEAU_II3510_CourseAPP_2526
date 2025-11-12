@@ -5,6 +5,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -16,6 +17,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.tumme.scrudstudents.R
 
 /**
  * Écran affichant la moyenne générale pondérée par ECTS de l'étudiant.
@@ -29,6 +31,7 @@ fun StudentSummaryScreen(
     viewModel: StudentViewModel = hiltViewModel(),
     summaryViewModel: StudentSummaryViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
     val student by viewModel.currentStudent
     val average by summaryViewModel.average.collectAsState()
     var isLoading by remember { mutableStateOf(true) }
@@ -43,7 +46,7 @@ fun StudentSummaryScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Résumé Final") },
+                title = { Text(context.getString(R.string.final_summary)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Text("←")
@@ -62,13 +65,13 @@ fun StudentSummaryScreen(
         ) {
             student?.let { currentStudent ->
                 Text(
-                    text = "Résumé pour ${currentStudent.firstName} ${currentStudent.lastName}",
+                    text = context.getString(R.string.summary_for, currentStudent.firstName, currentStudent.lastName),
                     style = MaterialTheme.typography.headlineSmall
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 
                 Text(
-                    text = "Niveau: ${currentStudent.level.value}",
+                    text = context.getString(R.string.level_value, currentStudent.level.value),
                     style = MaterialTheme.typography.titleMedium
                 )
                 Spacer(modifier = Modifier.height(32.dp))
@@ -87,7 +90,7 @@ fun StudentSummaryScreen(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Text(
-                                text = "Moyenne Pondérée",
+                                text = context.getString(R.string.weighted_average),
                                 style = MaterialTheme.typography.titleLarge
                             )
                             Spacer(modifier = Modifier.height(16.dp))
@@ -97,7 +100,7 @@ fun StudentSummaryScreen(
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(
-                                text = "sur 20",
+                                text = context.getString(R.string.out_of_20),
                                 style = MaterialTheme.typography.bodyMedium
                             )
                         }
@@ -106,7 +109,7 @@ fun StudentSummaryScreen(
                     if (average == 0.0f) {
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
-                            text = "Aucune note disponible pour ce niveau",
+                            text = context.getString(R.string.no_grades_for_level),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )

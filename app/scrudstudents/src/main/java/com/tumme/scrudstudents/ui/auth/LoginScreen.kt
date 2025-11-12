@@ -6,12 +6,14 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.tumme.scrudstudents.ui.auth.AuthViewModel
+import com.tumme.scrudstudents.R
 
 // Écran de connexion pour les étudiants et enseignants
 @OptIn(ExperimentalMaterial3Api::class)
@@ -20,6 +22,7 @@ fun LoginScreen(
     navController: NavController,
     viewModel: AuthViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(false) }
@@ -56,7 +59,7 @@ fun LoginScreen(
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Connexion",
+            text = context.getString(R.string.login),
             style = MaterialTheme.typography.headlineMedium
         )
         
@@ -65,7 +68,7 @@ fun LoginScreen(
         OutlinedTextField(
             value = username,
             onValueChange = { username = it },
-            label = { Text("Nom d'utilisateur") },
+            label = { Text(context.getString(R.string.username)) },
             modifier = Modifier.fillMaxWidth(),
             enabled = !isLoading
         )
@@ -75,7 +78,7 @@ fun LoginScreen(
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("Mot de passe") },
+            label = { Text(context.getString(R.string.password)) },
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             modifier = Modifier.fillMaxWidth(),
@@ -101,11 +104,11 @@ fun LoginScreen(
                     viewModel.login(username, password) { success ->
                         isLoading = false
                         if (!success) {
-                            errorMessage = "Nom d'utilisateur ou mot de passe incorrect"
+                            errorMessage = context.getString(R.string.error_invalid_credentials)
                         }
                     }
                 } else {
-                    errorMessage = "Veuillez remplir tous les champs"
+                    errorMessage = context.getString(R.string.error_fill_all_fields)
                 }
             },
             modifier = Modifier.fillMaxWidth(),
@@ -114,7 +117,7 @@ fun LoginScreen(
             if (isLoading) {
                 CircularProgressIndicator(modifier = Modifier.size(16.dp))
             } else {
-                Text("Se connecter")
+                Text(context.getString(R.string.connect))
             }
         }
         
@@ -123,7 +126,7 @@ fun LoginScreen(
         TextButton(
             onClick = { navController.navigate("register") }
         ) {
-            Text("Pas de compte ? S'inscrire")
+            Text(context.getString(R.string.no_account))
         }
     }
 }

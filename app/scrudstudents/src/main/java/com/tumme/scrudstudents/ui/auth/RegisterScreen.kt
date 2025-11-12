@@ -7,6 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -15,6 +16,7 @@ import androidx.navigation.NavController
 import com.tumme.scrudstudents.data.local.model.UserRole
 import com.tumme.scrudstudents.data.local.model.Gender
 import com.tumme.scrudstudents.data.local.model.LevelCourse
+import com.tumme.scrudstudents.R
 import java.util.Date
 
 // Écran d'inscription pour créer un nouveau compte (étudiant ou enseignant)
@@ -24,6 +26,7 @@ fun RegisterScreen(
     navController: NavController,
     viewModel: AuthViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
@@ -53,14 +56,14 @@ fun RegisterScreen(
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Inscription",
+            text = context.getString(R.string.register),
             style = MaterialTheme.typography.headlineMedium
         )
         
         Spacer(modifier = Modifier.height(32.dp))
         
         // Sélection du rôle
-        Text("Type de compte", style = MaterialTheme.typography.titleMedium)
+        Text(context.getString(R.string.account_type), style = MaterialTheme.typography.titleMedium)
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
@@ -75,7 +78,7 @@ fun RegisterScreen(
                     selected = selectedRole == UserRole.STUDENT,
                     onClick = { selectedRole = UserRole.STUDENT }
                 )
-                Text("Étudiant")
+                Text(context.getString(R.string.student))
             }
             Row(
                 modifier = Modifier.selectable(
@@ -87,7 +90,7 @@ fun RegisterScreen(
                     selected = selectedRole == UserRole.TEACHER,
                     onClick = { selectedRole = UserRole.TEACHER }
                 )
-                Text("Enseignant")
+                Text(context.getString(R.string.teacher))
             }
         }
         
@@ -97,7 +100,7 @@ fun RegisterScreen(
         OutlinedTextField(
             value = username,
             onValueChange = { username = it },
-            label = { Text("Nom d'utilisateur") },
+            label = { Text(context.getString(R.string.username)) },
             modifier = Modifier.fillMaxWidth(),
             enabled = !isLoading
         )
@@ -107,7 +110,7 @@ fun RegisterScreen(
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("Mot de passe") },
+            label = { Text(context.getString(R.string.password)) },
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             modifier = Modifier.fillMaxWidth(),
@@ -119,7 +122,7 @@ fun RegisterScreen(
         OutlinedTextField(
             value = confirmPassword,
             onValueChange = { confirmPassword = it },
-            label = { Text("Confirmer le mot de passe") },
+            label = { Text(context.getString(R.string.confirm_password)) },
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             modifier = Modifier.fillMaxWidth(),
@@ -133,7 +136,7 @@ fun RegisterScreen(
             OutlinedTextField(
                 value = firstName,
                 onValueChange = { firstName = it },
-                label = { Text("Prénom") },
+                label = { Text(context.getString(R.string.first_name)) },
                 modifier = Modifier.fillMaxWidth(),
                 enabled = !isLoading
             )
@@ -143,7 +146,7 @@ fun RegisterScreen(
             OutlinedTextField(
                 value = lastName,
                 onValueChange = { lastName = it },
-                label = { Text("Nom") },
+                label = { Text(context.getString(R.string.last_name)) },
                 modifier = Modifier.fillMaxWidth(),
                 enabled = !isLoading
             )
@@ -153,7 +156,7 @@ fun RegisterScreen(
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = { Text("Email") },
+                label = { Text(context.getString(R.string.email)) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 modifier = Modifier.fillMaxWidth(),
                 enabled = !isLoading
@@ -162,7 +165,7 @@ fun RegisterScreen(
             OutlinedTextField(
                 value = teacherFirstName,
                 onValueChange = { teacherFirstName = it },
-                label = { Text("Prénom") },
+                label = { Text(context.getString(R.string.first_name)) },
                 modifier = Modifier.fillMaxWidth(),
                 enabled = !isLoading
             )
@@ -172,7 +175,7 @@ fun RegisterScreen(
             OutlinedTextField(
                 value = teacherLastName,
                 onValueChange = { teacherLastName = it },
-                label = { Text("Nom") },
+                label = { Text(context.getString(R.string.last_name)) },
                 modifier = Modifier.fillMaxWidth(),
                 enabled = !isLoading
             )
@@ -182,7 +185,7 @@ fun RegisterScreen(
             OutlinedTextField(
                 value = teacherEmail,
                 onValueChange = { teacherEmail = it },
-                label = { Text("Email") },
+                label = { Text(context.getString(R.string.email)) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 modifier = Modifier.fillMaxWidth(),
                 enabled = !isLoading
@@ -193,7 +196,7 @@ fun RegisterScreen(
             OutlinedTextField(
                 value = department,
                 onValueChange = { department = it },
-                label = { Text("Département") },
+                label = { Text(context.getString(R.string.department)) },
                 modifier = Modifier.fillMaxWidth(),
                 enabled = !isLoading
             )
@@ -213,12 +216,12 @@ fun RegisterScreen(
         Button(
             onClick = {
                 if (password != confirmPassword) {
-                    errorMessage = "Les mots de passe ne correspondent pas"
+                    errorMessage = context.getString(R.string.error_password_mismatch)
                     return@Button
                 }
                 
                 if (username.isBlank() || password.isBlank()) {
-                    errorMessage = "Veuillez remplir tous les champs"
+                    errorMessage = context.getString(R.string.error_fill_all_fields)
                     return@Button
                 }
                 
@@ -227,7 +230,7 @@ fun RegisterScreen(
                 
                 if (selectedRole == UserRole.STUDENT) {
                     if (firstName.isBlank() || lastName.isBlank() || email.isBlank()) {
-                        errorMessage = "Veuillez remplir tous les champs"
+                        errorMessage = context.getString(R.string.error_fill_all_fields)
                         isLoading = false
                         return@Button
                     }
@@ -241,12 +244,12 @@ fun RegisterScreen(
                                 popUpTo("register") { inclusive = true }
                             }
                         } else {
-                            errorMessage = "Erreur lors de l'inscription"
+                            errorMessage = context.getString(R.string.error_registration_failed)
                         }
                     }
                 } else {
                     if (teacherFirstName.isBlank() || teacherLastName.isBlank() || teacherEmail.isBlank() || department.isBlank()) {
-                        errorMessage = "Veuillez remplir tous les champs"
+                        errorMessage = context.getString(R.string.error_fill_all_fields)
                         isLoading = false
                         return@Button
                     }
@@ -260,7 +263,7 @@ fun RegisterScreen(
                                 popUpTo("register") { inclusive = true }
                             }
                         } else {
-                            errorMessage = "Erreur lors de l'inscription"
+                            errorMessage = context.getString(R.string.error_registration_failed)
                         }
                     }
                 }
@@ -271,7 +274,7 @@ fun RegisterScreen(
             if (isLoading) {
                 CircularProgressIndicator(modifier = Modifier.size(16.dp))
             } else {
-                Text("S'inscrire")
+                Text(context.getString(R.string.sign_up))
             }
         }
         
@@ -280,7 +283,7 @@ fun RegisterScreen(
         TextButton(
             onClick = { navController.navigate("login") }
         ) {
-            Text("Déjà un compte ? Se connecter")
+            Text(context.getString(R.string.already_account))
         }
     }
 }

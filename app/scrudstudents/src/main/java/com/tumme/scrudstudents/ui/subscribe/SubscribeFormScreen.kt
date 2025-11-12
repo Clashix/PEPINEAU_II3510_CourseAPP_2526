@@ -5,11 +5,13 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.tumme.scrudstudents.data.local.model.SubscribeEntity
 import com.tumme.scrudstudents.data.local.model.StudentEntity
 import com.tumme.scrudstudents.data.local.model.CourseEntity
+import com.tumme.scrudstudents.R
 
 /**
  * Formulaire pour inscrire un étudiant à un cours.
@@ -22,6 +24,7 @@ fun SubscribeFormScreen(
     viewModel: SubscribeListViewModel = hiltViewModel(),
     onSaved: ()->Unit = {}
 ) {
+    val context = LocalContext.current
     var selectedStudentId by remember { mutableStateOf<Int?>(null) }
     var selectedCourseId by remember { mutableStateOf<Int?>(null) }
     var scoreText by remember { mutableStateOf("") }
@@ -43,7 +46,7 @@ fun SubscribeFormScreen(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Text(
-            text = "Nouvelle Inscription",
+            text = context.getString(R.string.new_subscription),
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(bottom = 8.dp)
         )
@@ -61,14 +64,14 @@ fun SubscribeFormScreen(
                 } ?: "",
                 onValueChange = { },
                 readOnly = true,
-                label = { Text("Étudiant") },
+                label = { Text(context.getString(R.string.student_label)) },
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = studentMenuExpanded) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .menuAnchor(),
                 isError = studentError,
                 supportingText = if (studentError) { 
-                    { Text("Veuillez sélectionner un étudiant") } 
+                    { Text(context.getString(R.string.please_select_student)) } 
                 } else null
             )
             
@@ -100,14 +103,14 @@ fun SubscribeFormScreen(
                 } ?: "",
                 onValueChange = { },
                 readOnly = true,
-                label = { Text("Cours") },
+                label = { Text(context.getString(R.string.course)) },
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = courseMenuExpanded) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .menuAnchor(),
                 isError = courseError,
                 supportingText = if (courseError) { 
-                    { Text("Veuillez sélectionner un cours") } 
+                    { Text(context.getString(R.string.please_select_course)) } 
                 } else null
             )
             
@@ -134,11 +137,11 @@ fun SubscribeFormScreen(
                 scoreText = newValue
                 scoreError = false
             },
-            label = { Text("Note") },
+            label = { Text(context.getString(R.string.grade_label)) },
             modifier = Modifier.fillMaxWidth(),
             isError = scoreError,
             supportingText = if (scoreError) { 
-                { Text("La note doit être positive") } 
+                { Text(context.getString(R.string.grade_must_be_positive)) } 
             } else null,
         )
 
@@ -174,7 +177,7 @@ fun SubscribeFormScreen(
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Sauvegarder")
+            Text(context.getString(R.string.save))
         }
     }
 }

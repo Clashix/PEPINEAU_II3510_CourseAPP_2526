@@ -1,3 +1,132 @@
 <resources>
     <string name="app_name">SCRUDStudents</string>
+    
+    <!-- Auth Screen -->
+    <string name="login">Login</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="connect">Log In</string>
+    <string name="no_account">No account? Sign up</string>
+    <string name="error_invalid_credentials">Invalid username or password</string>
+    <string name="error_fill_all_fields">Please fill in all fields</string>
+    
+    <!-- Register Screen -->
+    <string name="register">Sign Up</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="account_type">Account Type</string>
+    <string name="student">Student</string>
+    <string name="teacher">Teacher</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">Email</string>
+    <string name="department">Department</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="already_account">Already have an account? Log in</string>
+    <string name="error_password_mismatch">Passwords do not match</string>
+    <string name="error_registration_failed">Registration error</string>
+    
+    <!-- Student Home -->
+    <string name="student_home">Student Home</string>
+    <string name="welcome">Welcome, %1$s %2$s</string>
+    <string name="level">Level: %1$s</string>
+    <string name="available_courses">Available Courses</string>
+    <string name="available_courses_desc">View and enroll in courses for your level</string>
+    <string name="my_subscriptions">My Subscriptions</string>
+    <string name="my_subscriptions_desc">View your enrolled courses</string>
+    <string name="my_grades">My Grades</string>
+    <string name="my_grades_desc">View your grades by course</string>
+    <string name="final_summary">Final Summary</string>
+    <string name="final_summary_desc">View your weighted average</string>
+    <string name="logout">Log Out</string>
+    
+    <!-- Teacher Home -->
+    <string name="teacher_home">Teacher Home</string>
+    <string name="my_courses">My Courses</string>
+    <string name="my_courses_desc">Declare and manage your courses</string>
+    <string name="enter_grades">Enter Grades</string>
+    <string name="enter_grades_desc">Enter student grades</string>
+    <string name="enrolled_students">Enrolled Students</string>
+    <string name="enrolled_students_desc">View students in your courses</string>
+    
+    <!-- Student List -->
+    <string name="students">Students</string>
+    <string name="go_to_courses">Go to Courses</string>
+    <string name="dob">DOB</string>
+    <string name="last">Last</string>
+    <string name="first">First</string>
+    <string name="gender">Gender</string>
+    <string name="actions">Actions</string>
+    
+    <!-- Course List -->
+    <string name="courses">Courses</string>
+    <string name="go_to_students">Go to Students</string>
+    <string name="name">Name</string>
+    <string name="ects">ECTS</string>
+    <string name="level_label">Level</string>
+    
+    <!-- Grades Screen -->
+    <string name="grades_of">Grades of %1$s %2$s</string>
+    <string name="no_grades">No grades available</string>
+    <string name="grade">Grade: %1$.2f/20</string>
+    <string name="date">Date: %1$s</string>
+    <string name="course_id">Course #%1$d</string>
+    
+    <!-- Summary Screen -->
+    <string name="summary_for">Summary for %1$s %2$s</string>
+    <string name="level_value">Level: %1$s</string>
+    <string name="weighted_average">Weighted Average</string>
+    <string name="out_of_20">out of 20</string>
+    <string name="no_grades_for_level">No grades available for this level</string>
+    
+    <!-- Subscribe List -->
+    <string name="subscriptions">Subscriptions</string>
+    <string name="add_subscription">Add a subscription</string>
+    <string name="no_subscriptions">No subscriptions found</string>
+    <string name="student_label">Student</string>
+    <string name="course">Course</string>
+    <string name="grade_label">Grade</string>
+    
+    <!-- Teacher Grades Screen -->
+    <string name="select_course">Select a course</string>
+    <string name="students_enrolled_in">Students enrolled in %1$s</string>
+    <string name="no_students_in_course">No students enrolled in this course</string>
+    <string name="grade_out_of_20">Grade (out of 20)</string>
+    <string name="update_grade">Update grade</string>
+    <string name="save_grade">Save grade</string>
+    
+    <!-- Subscribe Form Screen -->
+    <string name="new_subscription">New Subscription</string>
+    <string name="please_select_student">Please select a student</string>
+    <string name="please_select_course">Please select a course</string>
+    <string name="grade_must_be_positive">Grade must be positive</string>
+    
+    <!-- Course Form Screen -->
+    <string name="course_name">Course Name</string>
+    <string name="ects_credits">ECTS Credits</string>
+    <string name="select_level">Select Level:</string>
+    <string name="description">Description</string>
+    <string name="teacher_id">Teacher ID</string>
+    <string name="course_name_required">Course name cannot be empty</string>
+    <string name="ects_must_be_positive">ECTS must be greater than 0</string>
+    
+    <!-- Details Screens -->
+    <string name="course_details">Course details</string>
+    <string name="student_details">Student details</string>
+    <string name="id_label">ID: %1$d</string>
+    <string name="name_label">Name: %1$s</string>
+    <string name="dob_label">DOB: %1$s</string>
+    <string name="gender_label">Gender: %1$s</string>
+    <string name="ects_label">ECTS: %1$.1f</string>
+    <string name="level_display">Level: %1$s</string>
+    
+    <!-- Common -->
+    <string name="back">Back</string>
+    <string name="loading">Loading…</string>
+    <string name="error">Error</string>
+    <string name="success">Success</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="add">Add</string>
 </resources>

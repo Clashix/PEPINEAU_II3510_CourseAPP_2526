@@ -4,10 +4,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.tumme.scrudstudents.data.local.model.CourseEntity
 import com.tumme.scrudstudents.data.local.model.LevelCourse
+import com.tumme.scrudstudents.R
 
 /**
  * Formulaire pour créer un nouveau cours.
@@ -19,6 +21,7 @@ fun CourseFormScreen(
     viewModel: CourseListViewModel = hiltViewModel(),
     onSaved: ()->Unit = {}
 ) {
+    val context = LocalContext.current
     var id by remember { mutableStateOf((0..10000).random()) }
     var nameCourse by remember { mutableStateOf("") }
     var ectsText by remember { mutableStateOf("") }
@@ -36,9 +39,9 @@ fun CourseFormScreen(
                 nameCourse = it
                 nameError = false
             }, 
-            label = { Text("Course Name") },
+            label = { Text(context.getString(R.string.course_name)) },
             isError = nameError,
-            supportingText = if (nameError) { { Text("Course name cannot be empty") } } else null
+            supportingText = if (nameError) { { Text(context.getString(R.string.course_name_required)) } } else null
         )
         Spacer(Modifier.height(8.dp))
         
@@ -48,13 +51,13 @@ fun CourseFormScreen(
                 ectsText = it
                 ectsError = false
             }, 
-            label = { Text("ECTS Credits") },
+            label = { Text(context.getString(R.string.ects_credits)) },
             isError = ectsError,
-            supportingText = if (ectsError) { { Text("ECTS must be greater than 0") } } else null
+            supportingText = if (ectsError) { { Text(context.getString(R.string.ects_must_be_positive)) } } else null
         )
         Spacer(Modifier.height(8.dp))
 
-        Text("Select Level:", modifier = Modifier.padding(bottom = 8.dp))
+        Text(context.getString(R.string.select_level), modifier = Modifier.padding(bottom = 8.dp))
         Row {
             listOf(LevelCourse.P1, LevelCourse.P2, LevelCourse.P3, 
                    LevelCourse.B1, LevelCourse.B2, LevelCourse.B3,
@@ -79,7 +82,7 @@ fun CourseFormScreen(
         TextField(
             value = description, 
             onValueChange = { description = it }, 
-            label = { Text("Description") },
+            label = { Text(context.getString(R.string.description)) },
             modifier = Modifier.height(100.dp)
         )
         Spacer(Modifier.height(8.dp))
@@ -92,7 +95,7 @@ fun CourseFormScreen(
                 } catch (e: NumberFormatException) {
                 }
             }, 
-            label = { Text("Teacher ID") }
+            label = { Text(context.getString(R.string.teacher_id)) }
         )
         Spacer(Modifier.height(16.dp))
         
@@ -130,7 +133,7 @@ fun CourseFormScreen(
                 onSaved()
             }
         }) {
-            Text("Save")
+            Text(context.getString(R.string.save))
         }
     }
 }

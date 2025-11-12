@@ -6,9 +6,11 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.tumme.scrudstudents.data.local.model.CourseEntity
+import com.tumme.scrudstudents.R
 
 /**
  * Écran affichant les détails d'un cours spécifique.
@@ -22,6 +24,7 @@ fun CourseDetailScreen(
     viewModel: CourseListViewModel = hiltViewModel(),
     onBack: ()->Unit = {}
 ) {
+    val context = LocalContext.current
     var course by remember { mutableStateOf<CourseEntity?>(null) }
 
     LaunchedEffect(courseId) {
@@ -29,18 +32,18 @@ fun CourseDetailScreen(
     }
 
     Scaffold(topBar = {
-        TopAppBar(title = { Text("Course details") }, navigationIcon = {
-            IconButton(onClick = onBack) { Icon(Icons.Default.ArrowBack, contentDescription = "Back") }
+        TopAppBar(title = { Text(context.getString(R.string.course_details)) }, navigationIcon = {
+            IconButton(onClick = onBack) { Icon(Icons.Default.ArrowBack, contentDescription = context.getString(R.string.back)) }
         })
     }) { padding ->
         Column(modifier = Modifier.fillMaxSize().padding(padding).padding(16.dp)) {
             if (course == null) {
-                Text("Loading...")
+                Text(context.getString(R.string.loading))
             } else {
-                Text("ID: ${course!!.idCourse}")
-                Text("Name: ${course!!.nameCourse}")
-                Text("ECTS: ${course!!.ectsCourse}")
-                Text("Level: ${course!!.levelCourse.value}")
+                Text(context.getString(R.string.id_label, course!!.idCourse))
+                Text(context.getString(R.string.name_label, course!!.nameCourse))
+                Text(context.getString(R.string.ects_label, course!!.ectsCourse))
+                Text(context.getString(R.string.level_display, course!!.levelCourse.value))
             }
         }
     }

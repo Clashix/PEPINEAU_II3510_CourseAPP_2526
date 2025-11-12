@@ -7,10 +7,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.tumme.scrudstudents.ui.student.StudentViewModel
+import com.tumme.scrudstudents.R
 
 /**
  * Page d'accueil de l'étudiant après connexion.
@@ -23,6 +25,7 @@ fun StudentHomeScreen(
     navController: NavController,
     viewModel: StudentViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
     val student by viewModel.currentStudent
     
     Column(
@@ -31,17 +34,17 @@ fun StudentHomeScreen(
             .padding(16.dp)
     ) {
         Text(
-            text = "Accueil Étudiant",
+            text = context.getString(R.string.student_home),
             style = MaterialTheme.typography.headlineMedium
         )
         
         student?.let { currentStudent ->
             Text(
-                text = "Bienvenue, ${currentStudent.firstName} ${currentStudent.lastName}",
+                text = context.getString(R.string.welcome, currentStudent.firstName, currentStudent.lastName),
                 style = MaterialTheme.typography.titleMedium
             )
             Text(
-                text = "Niveau : ${currentStudent.level.value}",
+                text = context.getString(R.string.level, currentStudent.level.value),
                 style = MaterialTheme.typography.bodyMedium
             )
         }
@@ -60,11 +63,11 @@ fun StudentHomeScreen(
                         modifier = Modifier.padding(16.dp)
                     ) {
                         Text(
-                            text = "Cours Disponibles",
+                            text = context.getString(R.string.available_courses),
                             style = MaterialTheme.typography.titleLarge
                         )
                         Text(
-                            text = "Voir et s'inscrire aux cours de votre niveau",
+                            text = context.getString(R.string.available_courses_desc),
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }
@@ -80,11 +83,11 @@ fun StudentHomeScreen(
                         modifier = Modifier.padding(16.dp)
                     ) {
                         Text(
-                            text = "Mes Inscriptions",
+                            text = context.getString(R.string.my_subscriptions),
                             style = MaterialTheme.typography.titleLarge
                         )
                         Text(
-                            text = "Voir vos cours inscrits",
+                            text = context.getString(R.string.my_subscriptions_desc),
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }
@@ -100,11 +103,11 @@ fun StudentHomeScreen(
                         modifier = Modifier.padding(16.dp)
                     ) {
                         Text(
-                            text = "Mes Notes",
+                            text = context.getString(R.string.my_grades),
                             style = MaterialTheme.typography.titleLarge
                         )
                         Text(
-                            text = "Consulter vos notes par cours",
+                            text = context.getString(R.string.my_grades_desc),
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }
@@ -120,11 +123,11 @@ fun StudentHomeScreen(
                         modifier = Modifier.padding(16.dp)
                     ) {
                         Text(
-                            text = "Résumé Final",
+                            text = context.getString(R.string.final_summary),
                             style = MaterialTheme.typography.titleLarge
                         )
                         Text(
-                            text = "Voir votre moyenne pondérée",
+                            text = context.getString(R.string.final_summary_desc),
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }
@@ -138,7 +141,7 @@ fun StudentHomeScreen(
             onClick = { viewModel.logout() },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Se déconnecter")
+            Text(context.getString(R.string.logout))
         }
     }
 }

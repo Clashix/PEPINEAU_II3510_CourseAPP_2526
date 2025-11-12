@@ -7,8 +7,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.tumme.scrudstudents.R
 
 /**
  * Écran affichant la liste de tous les étudiants avec opérations CRUD.
@@ -24,19 +26,20 @@ fun StudentListScreen(
     onNavigateToCourses: () -> Unit = {},
     onNavigateToSubscribes: () -> Unit = {}
 ) {
+    val context = LocalContext.current
     val students by viewModel.students.collectAsState()
     val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Students") },
+                title = { Text(context.getString(R.string.students)) },
                 actions = {
                     TextButton(onClick = onNavigateToCourses) {
-                        Text("Cours")
+                        Text(context.getString(R.string.courses))
                     }
                     TextButton(onClick = onNavigateToSubscribes) {
-                        Text("Inscriptions")
+                        Text(context.getString(R.string.subscriptions))
                     }
                 }
             )
@@ -56,12 +59,18 @@ fun StudentListScreen(
                 onClick = onNavigateToCourses,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Go to Courses")
+                Text(context.getString(R.string.go_to_courses))
             }
             
             Spacer(modifier = Modifier.height(16.dp))
             
-            TableHeader(cells = listOf("DOB","Last", "First", "Gender", "Actions"),
+            TableHeader(cells = listOf(
+                context.getString(R.string.dob),
+                context.getString(R.string.last),
+                context.getString(R.string.first),
+                context.getString(R.string.gender),
+                context.getString(R.string.actions)
+            ),
                 weights = listOf(0.25f, 0.25f, 0.25f, 0.15f, 0.10f))
 
             Spacer(modifier = Modifier.height(8.dp))

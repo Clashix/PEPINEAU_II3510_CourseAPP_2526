@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -20,6 +21,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
+import com.tumme.scrudstudents.R
 
 /**
  * Écran permettant à l'enseignant de saisir et modifier les notes des étudiants.
@@ -33,6 +35,7 @@ fun TeacherGradesScreen(
     viewModel: TeacherViewModel = hiltViewModel(),
     gradesViewModel: TeacherGradesViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
     val teacher by viewModel.currentTeacher
     val courses by gradesViewModel.teacherCourses.collectAsState()
     var selectedCourse by remember { mutableStateOf<CourseEntity?>(null) }
@@ -55,7 +58,7 @@ fun TeacherGradesScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Saisir des Notes") },
+                title = { Text(context.getString(R.string.enter_grades)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Text("←")
@@ -71,7 +74,7 @@ fun TeacherGradesScreen(
                 .padding(16.dp)
         ) {
             Text(
-                text = "Sélectionnez un cours",
+                text = context.getString(R.string.select_course),
                 style = MaterialTheme.typography.titleMedium
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -106,13 +109,13 @@ fun TeacherGradesScreen(
             // Liste des étudiants inscrits au cours sélectionné
             selectedCourse?.let { course ->
                 Text(
-                    text = "Étudiants inscrits à ${course.nameCourse}",
+                    text = context.getString(R.string.students_enrolled_in, course.nameCourse),
                     style = MaterialTheme.typography.titleMedium
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 
                 if (students.isEmpty()) {
-                    Text("Aucun étudiant inscrit à ce cours")
+                    Text(context.getString(R.string.no_students_in_course))
                 } else {
                     LazyColumn(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -147,6 +150,7 @@ fun GradeEntryCard(
     existingGrade: GradeEntity?,
     onGradeSave: (GradeEntity) -> Unit
 ) {
+    val context = LocalContext.current
     var gradeText by remember { mutableStateOf(existingGrade?.grade?.toString() ?: "") }
     
     Card(
@@ -164,7 +168,7 @@ fun GradeEntryCard(
             TextField(
                 value = gradeText,
                 onValueChange = { gradeText = it },
-                label = { Text("Note (sur 20)") },
+                label = { Text(context.getString(R.string.grade_out_of_20)) },
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -187,7 +191,12 @@ fun GradeEntryCard(
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text(if (existingGrade != null) "Modifier la note" else "Enregistrer la note")
+                Text(
+                    if (existingGrade != null) 
+                        context.getString(R.string.update_grade) 
+                    else 
+                        context.getString(R.string.save_grade)
+                )
             }
         }
     }

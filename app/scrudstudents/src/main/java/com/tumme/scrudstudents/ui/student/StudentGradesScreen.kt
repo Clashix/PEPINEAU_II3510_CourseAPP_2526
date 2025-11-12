@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -21,6 +22,7 @@ import kotlinx.coroutines.flow.first
 import java.text.SimpleDateFormat
 import java.util.Locale
 import javax.inject.Inject
+import com.tumme.scrudstudents.R
 
 /**
  * Écran affichant toutes les notes de l'étudiant connecté.
@@ -34,6 +36,7 @@ fun StudentGradesScreen(
     viewModel: StudentViewModel = hiltViewModel(),
     gradesViewModel: StudentGradesViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
     val student by viewModel.currentStudent
     val grades by gradesViewModel.grades.collectAsState()
     var isLoading by remember { mutableStateOf(true) }
@@ -52,7 +55,7 @@ fun StudentGradesScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Mes Notes") },
+                title = { Text(context.getString(R.string.my_grades)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Text("←")
@@ -69,7 +72,7 @@ fun StudentGradesScreen(
         ) {
             student?.let { currentStudent ->
                 Text(
-                    text = "Notes de ${currentStudent.firstName} ${currentStudent.lastName}",
+                    text = context.getString(R.string.grades_of, currentStudent.firstName, currentStudent.lastName),
                     style = MaterialTheme.typography.headlineSmall
                 )
                 Spacer(modifier = Modifier.height(16.dp))
@@ -78,7 +81,7 @@ fun StudentGradesScreen(
                     CircularProgressIndicator()
                 } else if (grades.isEmpty()) {
                     Text(
-                        text = "Aucune note disponible",
+                        text = context.getString(R.string.no_grades),
                         style = MaterialTheme.typography.bodyLarge
                     )
                 } else {
@@ -93,17 +96,17 @@ fun StudentGradesScreen(
                                     modifier = Modifier.padding(16.dp)
                                 ) {
                                     Text(
-                                        text = courseNamesState[grade.courseId] ?: "Cours #${grade.courseId}",
+                                        text = courseNamesState[grade.courseId] ?: context.getString(R.string.course_id, grade.courseId),
                                         style = MaterialTheme.typography.titleMedium
                                     )
                                     Spacer(modifier = Modifier.height(4.dp))
                                     Text(
-                                        text = "Note: ${grade.grade}/20",
+                                        text = context.getString(R.string.grade, grade.grade),
                                         style = MaterialTheme.typography.bodyLarge
                                     )
                                     Spacer(modifier = Modifier.height(4.dp))
                                     Text(
-                                        text = "Date: ${SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(java.util.Date(grade.dateGiven))}",
+                                        text = context.getString(R.string.date, SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(java.util.Date(grade.dateGiven))),
                                         style = MaterialTheme.typography.bodySmall
                                     )
                                 }

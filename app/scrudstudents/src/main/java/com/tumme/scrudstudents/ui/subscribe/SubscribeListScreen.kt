@@ -9,8 +9,10 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.tumme.scrudstudents.R
 
 /**
  * Écran affichant la liste de toutes les inscriptions (étudiant + cours).
@@ -25,6 +27,7 @@ fun SubscribeListScreen(
     onNavigateToStudents: () -> Unit = {},
     onNavigateToCourses: () -> Unit = {}
 ) {
+    val context = LocalContext.current
     val subscribes by viewModel.subscribes.collectAsState()
     val students by viewModel.students.collectAsState()
     val courses by viewModel.courses.collectAsState()
@@ -40,13 +43,13 @@ fun SubscribeListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Inscriptions") },
+                title = { Text(context.getString(R.string.subscriptions)) },
                 actions = {
                     TextButton(onClick = onNavigateToStudents) {
-                        Text("Étudiants")
+                        Text(context.getString(R.string.students))
                     }
                     TextButton(onClick = onNavigateToCourses) {
-                        Text("Cours")
+                        Text(context.getString(R.string.courses))
                     }
                 }
             )
@@ -58,7 +61,7 @@ fun SubscribeListScreen(
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = "Ajouter une inscription"
+                    contentDescription = context.getString(R.string.add_subscription)
                 )
             }
         }
@@ -71,7 +74,7 @@ fun SubscribeListScreen(
                 contentAlignment = androidx.compose.ui.Alignment.Center
             ) {
                 Text(
-                    text = "Aucune inscription trouvée",
+                    text = context.getString(R.string.no_subscriptions),
                     style = MaterialTheme.typography.bodyLarge
                 )
             }
@@ -85,7 +88,12 @@ fun SubscribeListScreen(
             ) {
                 item {
                     TableHeader(
-                        cells = listOf("Étudiant", "Cours", "Note", "Actions"),
+                        cells = listOf(
+                            context.getString(R.string.student_label),
+                            context.getString(R.string.course),
+                            context.getString(R.string.grade_label),
+                            context.getString(R.string.actions)
+                        ),
                         weights = listOf(0.3f, 0.3f, 0.2f, 0.2f)
                     )
                 }

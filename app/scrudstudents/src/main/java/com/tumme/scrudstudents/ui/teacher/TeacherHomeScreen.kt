@@ -7,10 +7,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.tumme.scrudstudents.ui.teacher.TeacherViewModel
+import com.tumme.scrudstudents.R
 
 /**
  * Page d'accueil de l'enseignant après connexion.
@@ -23,6 +25,7 @@ fun TeacherHomeScreen(
     navController: NavController,
     viewModel: TeacherViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
     val teacher by viewModel.currentTeacher
     
     Column(
@@ -31,13 +34,13 @@ fun TeacherHomeScreen(
             .padding(16.dp)
     ) {
         Text(
-            text = "Accueil Enseignant",
+            text = context.getString(R.string.teacher_home),
             style = MaterialTheme.typography.headlineMedium
         )
         
         teacher?.let { currentTeacher ->
             Text(
-                text = "Bienvenue, ${currentTeacher.firstName} ${currentTeacher.lastName}",
+                text = context.getString(R.string.welcome, currentTeacher.firstName, currentTeacher.lastName),
                 style = MaterialTheme.typography.titleMedium
             )
         }
@@ -56,11 +59,11 @@ fun TeacherHomeScreen(
                         modifier = Modifier.padding(16.dp)
                     ) {
                         Text(
-                            text = "Mes Cours",
+                            text = context.getString(R.string.my_courses),
                             style = MaterialTheme.typography.titleLarge
                         )
                         Text(
-                            text = "Déclarer et gérer vos cours",
+                            text = context.getString(R.string.my_courses_desc),
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }
@@ -76,11 +79,11 @@ fun TeacherHomeScreen(
                         modifier = Modifier.padding(16.dp)
                     ) {
                         Text(
-                            text = "Saisir des Notes",
+                            text = context.getString(R.string.enter_grades),
                             style = MaterialTheme.typography.titleLarge
                         )
                         Text(
-                            text = "Entrer les notes des étudiants",
+                            text = context.getString(R.string.enter_grades_desc),
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }
@@ -96,11 +99,11 @@ fun TeacherHomeScreen(
                         modifier = Modifier.padding(16.dp)
                     ) {
                         Text(
-                            text = "Étudiants Inscrits",
+                            text = context.getString(R.string.enrolled_students),
                             style = MaterialTheme.typography.titleLarge
                         )
                         Text(
-                            text = "Voir les étudiants de vos cours",
+                            text = context.getString(R.string.enrolled_students_desc),
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }
@@ -114,7 +117,7 @@ fun TeacherHomeScreen(
             onClick = { viewModel.logout() },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Se déconnecter")
+            Text(context.getString(R.string.logout))
         }
     }
 }
